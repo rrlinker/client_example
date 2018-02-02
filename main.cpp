@@ -9,25 +9,9 @@
 #include <librarian.h>
 
 #include <iostream>
+#include <conio.h>
 
 int main() {
-    // dolzna bitj vozmoznostj request nestkolko libraryj za 1 sessiju
-    //
-    // dolzna bitj vozmoznostj request library v drugoj process
-    // => Linker class -- abstract;
-    // LocalLinker
-    // RemoteLinker
-    //
-    // class Library
-    // map<symbol, address>
-    // call(symbol, params...);
-    //
-    // Library class -- abstract;
-    // LocalLibrary
-    // RemoteLibrary
-    //
-    // dolzna bitj vozmoznostj zashifrovatj connection => Connection class -- abstract.
-    
     try {
         rrl::win::WSConnection conn;
         conn.startup();
@@ -43,11 +27,19 @@ int main() {
         rrl::Authorizer authorizer(token);
         authorizer.authorize(courier);
 
-        rrl::LocalLibrary library("test");
+        rrl::LocalLibrary libmsgbox("msgbox");
         rrl::LocalLinker linker;
 
         rrl::Librarian librarian(courier);
-        librarian.link(linker, library);
+        librarian.link(linker, libmsgbox);
+
+        if (libmsgbox["AskBox"].call<int>("Yes, or no?") == IDYES) {
+            rrl::LocalLibrary libtest("test");
+            librarian.link(linker, libtest);
+            libtest["rrl_main"].call<void>();
+            librarian.unlink(linker, libtest);
+        }
+        librarian.unlink(linker, libmsgbox);
 
         conn.disconnect();
 
@@ -56,7 +48,8 @@ int main() {
         std::cerr << e.what() << std::endl;
     }
 
-    getchar();
+    std::cout << "Press any key to exit ... " << std::endl;
+    getch();
 
     return 0;
 }

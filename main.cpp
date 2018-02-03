@@ -33,10 +33,10 @@ int main() {
         rrl::Librarian librarian(courier);
         librarian.link(linker, libmsgbox);
 
-        if (libmsgbox["AskBox"].call<int>("Yes, or no?") == IDYES) {
+        if (libmsgbox["AskBox"].ccall<int>("Yes, or no?") == IDYES) {
             rrl::LocalLibrary libtest("test");
             librarian.link(linker, libtest);
-            libtest["rrl_main"].call<void>();
+            libtest["rrl_main"].ccall<DWORD>(0);
             librarian.unlink(linker, libtest);
         }
         librarian.unlink(linker, libmsgbox);

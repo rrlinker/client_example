@@ -1,7 +1,6 @@
 #include <ws_connection.h>
 #include <courier.h>
 #include <linker.h>
-#include <authorizer.h>
 #include <locallibrary.h>
 #include <remotelibrary.h>
 #include <locallinker.h>
@@ -16,30 +15,20 @@ int main() {
         rrl::win::WSConnection conn;
         conn.startup();
 
-        std::array<uint8_t, 16> ip = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 127, 0, 0, 1 };
+        std::array<uint8_t, 16> ip{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 127, 0, 0, 1 };
         uint16_t port = 40545;
-        rrl::Address addr(ip, port);
+        rrl::Address addr({ ip, port });
         conn.connect(addr);
         rrl::Courier courier(conn);
 
-        // OPTIONAL
-        rrl::Token token = {};
-        rrl::Authorizer authorizer(token);
-        authorizer.authorize(courier);
-
-        rrl::LocalLibrary libmsgbox("msgbox");
+        rrl::LocalLibrary lib("example");
         rrl::LocalLinker linker;
 
         rrl::Librarian librarian(courier);
-        librarian.link(linker, libmsgbox);
+        librarian.link(linker, lib);
 
-        if (libmsgbox["AskBox"].ccall<int>("Yes, or no?") == IDYES) {
-            rrl::LocalLibrary libtest("test");
-            librarian.link(linker, libtest);
-            libtest["rrl_main"].ccall<DWORD>(0);
-            librarian.unlink(linker, libtest);
-        }
-        librarian.unlink(linker, libmsgbox);
+        int result = lib["example"].ccall<int>();
+        librarian.unlink(linker, lib);
 
         conn.disconnect();
 

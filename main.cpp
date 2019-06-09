@@ -1,11 +1,9 @@
-#include <ws_connection.h>
-#include <courier.h>
-#include <linker.h>
-#include <locallibrary.h>
-#include <remotelibrary.h>
-#include <locallinker.h>
-#include <remotelinker.h>
-#include <librarian.h>
+#include <libclient/ws_connection.h>
+#include <librlcom/courier.h>
+#include <libclient/linker.h>
+#include <libclient/locallibrary.h>
+#include <libclient/locallinker.h>
+#include <libclient/librarian.h>
 
 #include <iostream>
 #include <conio.h>

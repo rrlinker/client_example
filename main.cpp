@@ -1,5 +1,5 @@
 #include <libclient/ws_connection.h>
-#include <librlcom/courier.h>
+#include <librlcom/raw_courier.h>
 #include <libclient/linker.h>
 #include <libclient/locallibrary.h>
 #include <libclient/locallinker.h>
@@ -17,7 +17,7 @@ int main() {
         uint16_t port = 40545;
         rrl::Address addr({ ip, port });
         conn.connect(addr);
-        rrl::Courier courier(conn);
+        rrl::RawCourier courier(conn);
 
         rrl::LocalLibrary lib("example");
         rrl::LocalLinker linker;

@@ -1,9 +1,9 @@
-#include <libclient/ws_connection.hpp>
-#include <librlcom/raw_courier.hpp>
-#include <libclient/linker.hpp>
-#include <libclient/locallibrary.hpp>
-#include <libclient/locallinker.hpp>
-#include <libclient/librarian.hpp>
+#include <librrlclient/ws_connection.hpp>
+#include <librrlcom/raw_courier.hpp>
+#include <librrlclient/linker.hpp>
+#include <librrlclient/locallibrary.hpp>
+#include <librrlclient/locallinker.hpp>
+#include <librrlclient/librarian.hpp>
 
 #include <iostream>
 #include <conio.h>

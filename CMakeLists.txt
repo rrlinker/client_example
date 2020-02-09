@@ -24,13 +24,13 @@ set_target_properties(
 
 target_link_directories(
     ${PROJECT_NAME}
-    PRIVATE "../libclient/build/${ARCH}/$<CONFIG>"
-    PRIVATE "../librlcom/build/${ARCH}/$<CONFIG>"
+    PRIVATE "../librrlclient/build/${ARCH}/$<CONFIG>"
+    PRIVATE "../librrlcom/build/${ARCH}/$<CONFIG>"
 )
 
 target_link_libraries(
     ${PROJECT_NAME}
-    PRIVATE ws2_32 libclient librlcom
+    PRIVATE ws2_32 librrlclient librrlcom
 )
 
 target_include_directories(
